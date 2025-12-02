@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Resume Website</title>
+    <style>
+
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        .sidebar {
+	    overflow: visible;
+            width: 200px;
+            background-color: #f5f5f5;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            border-right: 1px solid #ddd;
+        }
+        .logo {
+            font-family: "Didot";
+   	    width: 60px;
+    	    height: 60px;
+    	    border-radius: 50%;
+    	    background-color: #000;
+    	    color: #fff;
+    	    display: flex;
+    	    justify-content: center;
+   	    align-items: center;
+    	    font-size: 24px;
+    	    margin-bottom: 40px;
+    	    opacity: 0;                 
+    	    transform: translateX(0);    
+        }
+
+	.logo.animate {
+    	     animation: logoRoll 1.3s cubic-bezier(.2,.9,.2,1) forwards;
+	}
+
+	@keyframes logoRoll {
+    		from {
+        		transform: translateX(-140px) rotate(-360deg);
+        		opacity: 0;
+    		     }
+    		to {
+        		transform: translateX(0) rotate(0deg);
+        		opacity: 1;
+    		     }
+	}
+
+        .nav a {
+	    font-family: "eras demi itc";
+            display: block;
+            margin: 15px 0;
+            text-decoration: none;
+            color: #000000;
+            font-size: 16px;
+	    
+        }
+        .nav a:hover {
+            font-weight: bold;
+        }
+	.watermark {
+    	    position: absolute;
+    	    bottom: 20px;
+    	    left: 20px;
+    	    width: 160px;
+    	    font-size: 11px;
+    	    font-family: "Courier New";
+    	    color: #555;
+    	    line-height: 1.4;
+    	    opacity: 0.7;
+	}
+
+        .content {
+            flex: 1;
+            padding: 60px;
+            overflow-y: auto;
+        }
+        .title {
+	    font-family: "salena";
+    	    margin-bottom: 0px;  
+            font-size: 32px;
+            font-weight: bold;
+	
+            
+	}
+	.section-heading {
+	    font-family:"Garamond";
+	    font-size: 20px;
+	    font-weight: bold;
+	}
+        
+        .section-text {
+	    font-family: "Courier New";
+            max-width: 750px;
+            line-height: 1.6;
+            font-size: 16px;
+	    text-align: justify;
+        }
+	.profile-photo {
+	    width: 750px;
+	    opacity: 0;
+	    transform: translateY(20px);
+            animation: fadeInPhoto 1s ease forwards;
+            animation-delay: 0.3s;
+	}
+	table, th, td {
+  	    border-collapse: collapse;
+  	    padding: 5px;
+	    order-bottom: 1px solid #ddd;
+	}
+	tr:nth-child(even) {background-color: #f2f2f2;}
+
+	@keyframes fadeInPhoto {
+	to {
+	opacity: 1;
+	transform: translateY(0);
+	   }
+	}
+
+	img {
+    	    transition: transform 0.35s ease, filter 0.35s ease;
+    	    transform-origin: center;
+	}
+
+	img:hover {
+    	    transform: translateY(-10px) scale(1.06);
+    	    filter: brightness(1.1);
+	}
+
+	*/CURSOR EFFECT*/
+	body {
+  		position: relative;
+  		overflow-x: hidden;
+	}
+
+	.ripple {
+  		position: fixed;
+  		width: 50px;
+  		height: 50px;
+  		border-radius: 50%;
+  		pointer-events: none;
+  		transform: translate(-50%, -50%);
+  		z-index: 9999;
+  		opacity: 0;
+  		transition: opacity 0.35s ease-out, transform 0.35s ease-out;
+  		backdrop-filter: blur(1px) brightness(0.8) contrast(1.4);
+  		-webkit-backdrop-filter: blur(12px) brightness(0.8) contrast(1.4);
+  		background: rgba(0, 0, 0, 0.15);
+	}
+	html {
+		scroll-behavior: smooth;
+	}
+
+	/* BASE STATE — all sections invisible */
+	section {
+    		opacity: 0;
+    		transform: translateY(20px);
+    		transition: opacity 0.7s ease, transform 0.7s ease;
+   		position: relative;
+    		z-index: 0;
+    		scroll-margin-top: 40px;
+	}
+
+	/* VISIBLE SECTION */
+	section.active {
+   		opacity: 1;
+    		transform: translateY(0);
+    		z-index: 1;
+	}
+
+	section.visible {
+    		opacity: 1 !important;
+    		transform: translateY(0) !important;
+	}
+	* {
+  	box-sizing: border-box;
+	}
+
+	.column {
+  		float: left;
+ 		width: 10%;
+  		padding: 5px;
+	}
+
+	/* Clearfix (clear floats) */
+		.row::after {
+  		content: "";
+  		clear: both;
+  		display: table;
+	}
+
+
+	/* MOBILE VIEW — Sidebar becomes top bar */
+	@media screen and (max-width: 768px) {
+
+    	.container {
+        	flex-direction: column;
+        	height: auto;
+    	}
+
+    	.sidebar {
+        	width: 100%;
+        	height: auto;
+        	padding: 20px 10px;
+        	border-right: none;
+        	border-bottom: 1px solid #ddd;
+        	display: flex;
+        	flex-direction: column;
+        	align-items: center;
+    	}
+
+    	.logo {
+        	margin-bottom: 20px;
+    	}
+
+    	.nav {
+        	display: flex;
+        	gap: 15px;
+        	flex-wrap: wrap;
+        	justify-content: center;
+    	}
+
+    	.nav a {
+        	margin: 0;
+        	padding: 8px 12px;
+        	font-size: 14px;
+   	}
+
+    	.content {
+        	padding: 20px;
+    	}	
+
+    	.watermark {
+        	position: static;
+        	margin-top: 15px;
+        	text-align: center;
+    	}
+
+    	.profile-photo {
+        	width: 100%;
+    	}
+
+    	table {
+        	font-size: 14px;
+    	}
+	 #experiences {
+    		min-height: 60vh; /* ensures it occupies space so observers work reliably */
+    		padding-bottom: 30px;
+  	}
+	}
+	
+
+		
+
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="sidebar">
+        <div class="logo">H.S.</div>
+        <div class="nav">
+    	   <a href="#home">Home</a>
+           <a href="#biodata">Biodata</a>
+    	   <a href="#education">Education</a>
+    	   <a href="#skills">Skills</a>
+    	   <a href="#experiences">Experiences</a>
+	   <a href="#reference">References</a>
+	</div>
+<div class="watermark">© 2025 Hafiz Salim<br>IMD 318 Individual Project</div>
+    </div>
+
+
+
+    <div class="content">
+        <section id="home">
+            <h class="section-text"><i><b> Hey, I'am </b></i></h><div class="title">HAFIZ SALIM</div>
+	    <img src="images/peng3.jpg" class="profile-photo">
+	    <b><p class="section-heading">About</p></b>
+	    <b><i><p class="section-text">Frontend Developer • Runner • Athlete</p></i></b>
+            <p class="section-text">My name is Hafiz Salim, I'm a 26 years old front end developer looking forward to any placement. Graduated from UiTM in Bachelor of Information Science (Hons) Information Systems Management with 3.85 CGPA with 2 years of working experience in web develepmont. Looking forward to learning new things aswell&#9996;.</p>
+        </section><br><br>
+
+        <section id="biodata">
+             <div class="title">Biodata</div>
+	     <p class="section-heading"> Personal Details </p>
+             <p class="section-text"> 
+
+	     <table border="1" style width="100%">
+
+
+		<tr>
+		    <th><p class="section-text"> <b>Full name:</b></th>
+		    <td><p class="section-text"> Hafiz Abu Salim al Khattab</p></td>
+		    
+		</tr>
+		<tr>
+		    
+		    <th><p class="section-text"> <b>Date of Birth:</b></th>
+	            <td><p class="section-text"> 14 March 1999</p></td>
+		</tr>
+		<tr>
+		    <th><p class="section-text"> <b>Age:</b></th>
+	   	    <td><p class="section-text"> 26</p></td>
+		</tr>
+		<tr>
+		    <th><p class="section-text"> <b>Gender:</b></th>
+		    <td><p class="section-text"> Male</p></td>
+		</tr>
+		<tr>
+		    <th><p class="section-text"> <b>Nationality:</b></th>
+	            <td><p class="section-text"> Malaysia</p></td>
+		</tr>
+		<tr>
+		    <th><p class="section-text"> <b>Marital Status:</b></th>
+		    <td><p class="section-text"> Married</p></td>
+		</tr>
+		<tr>
+		    <th><p class="section-text"> <b>Address:</b></th>
+		    <td><p class="section-text"> No. 27, Jalan Seri Damai 3, Taman Seri Damai, 43200 Cheras, Selangor, Malaysia</p></td>
+		</tr>
+
+		</table>
+	     
+
+	    <p class="section-heading"> Contact Me </p>
+	    <div class="row">
+		<div class="column">
+     			<a href="mailto: hafizsalim@example.com"><img src="images/email.png" alt="Logo Email" style = "width:50%"></a>
+  		</div>
+  		<div class="column">
+    			<a href="tel:+601129487625"><img src="images/call.png" alt="Logo Call" style = "width:50%"></a>
+  		</div>
+  		<div class="column">
+    			<a href="https://www.instagram.com/6ix9ine/?hl=en"><img src="images/ig.png" alt="Logo Instagram" style = "width:50%"></a>
+  		</div>
+		<div class="column">
+    			<a href="https://x.com/realDonaldTrump"><img src="images/x.png" alt="Logo Twitter" style = "width:55%"></a>
+  		</div>
+        </section><br><br>
+
+
+
+
+
+        <section id="education">
+            <div class="title">Education</div><br>
+            
+	    <center><a href="https://www.facebook.com/skseribesout/?locale=ms_MY"><img src="images/sk.png" alt="Logo SK" style = "width:20%"></a></center>
+	    <center><p class="section-heading"> SK Seri Besout, Perak</p><center>
+	    <center><p class="section-heading"> 2005 - 2011 </p></center>
+	    <center><center><a href="https://www.instagram.com/smkcochrane/?hl=en"><img src="images/smk.jpeg" alt="Logo SMK" style = "width:30%"></a></center>
+	    <center><p class="section-heading"> SMK Cochrane, Kuala Lumpur</p><center>
+	    <center><p class="section-heading"> 2012 - 2017 </p></center>
+	    <center><center><a href="http://www.kms.matrik.edu.my/kms/"><img src="images/kms.png" alt="Logo KMS" style = "width:30%"></a></center>
+	    <center><p class="section-heading"> Kolej Matrikulasi Selangor, Selangor</p><center>
+	    <center><p class="section-heading"> 2018 - 2019 </p></center>
+	    <center><center><a href="https://selangor.uitm.edu.my/index.php/en/campuses/puncak-perdana-campus"><img src="images/uitm.jpg" alt="Logo UiTM" style = "width:30%"></a></center>
+	    <center><p class="section-heading"> UiTM Puncak Perdana, Selangor</p><center>
+	    <center><p class="section-heading"> Bachelor of Information Science (Hons) Information Systems Management</p><center>
+	    <center><p class="section-heading"> 2019 - 2022 </p></center>
+	    
+        </section><br><br><br><br>
+
+
+
+
+
+
+        <section id="skills">
+            <div class="title">Skills</div><br>
+            <ul>
+		<li><p class="section-text"><b>Pixel-Perfect UI Design - </b> <i>Mastery in creating ultra-precise visual layouts.</p></i></li>
+		<li><p class="section-text"><b>SVG Animation & Optimization - </b><i>Expertise in scalable vector graphics for interactive web elements.</p></i></li>
+		<li><p class="section-text"><b>CSS Art & Advanced Styling - </b><i>Creating complex shapes, gradients, and visual effects purely with CSS.</p></i></li>
+		<li><p class="section-text"><b>WebGL & 3D Visualizations - </b><i>Experience building 3D graphics and animations in the browser.</p></i></li>
+		<li><p class="section-text"><b>Canvas API Mastery - </b><i>Dynamic drawings and game-ready visual effects.</p></i></li>
+		<li><p class="section-text"><b>Motion UI & Microinteractions - </b><i>Smooth, subtle animations enhancing user experience.</p></i></li>
+		<li><p class="section-text"><b>High-Fidelity Mockups - </b><i>Translating designs into polished, production-ready visuals.</p></i></li>
+		<li><p class="section-text"><b>Responsive Iconography - </b><i>Designing and implementing adaptive icons for multiple screen sizes.</p></i></li>
+		<li><p class="section-text"><b>Theming & Dark Mode Design - </b><i>Advanced color theory applied to multiple UI themes.</p></i></li>
+	    </ul>
+
+        </section><br><br>
+
+
+
+
+        <section id="experiences">
+            <div class="title">Experiences</div><br><br><br><br>
+
+            <center><img src="images/klk.jpg" alt="Gambar KLK" style = "width:60%"></center>
+	    <center><p class="section-heading">IT Support Intern — KLK Ipoh<br><br>July 2021 - January 2022</p><center>
+	    
+	    <ul>
+		<li><p class = "section-text">Assisted staff with basic troubleshooting for computers, printers, and software issues.</p></li>
+		<li><p class = "section-text">Helped set up new workstations, including installation and configuration of required applications.</p></li>
+		<li><p class = "section-text">Supported user account management and updated IT asset records.</p></li>
+	    </ul><br><br><br><br>
+
+	    <center><img src="images/bi.jpg" alt="Gambar Bank Islam" style = "width:60%"></center>
+	    <center><p class="section-heading"> Front-End Develepor — Bank Islam, Kuala Lumpur<br><br>August 2023 - September 2025</p><center>
+
+	    <ul>
+		<li><p class = "section-text">Developed and maintained responsive web interfaces for internal banking applications.</p></li>
+		<li><p class = "section-text">Converted UI/UX designs into functional pages using HTML, CSS, JavaScript, and React.</p></li>
+		<li><p class = "section-text">Optimized front-end performance to improve load speed and user experience.</p></li>
+		<li><p class = "section-text">Collaborated with backend developers to integrate APIs and ensure smooth data flow.</p></li>
+		<li><p class = "section-text">Implemented UI enhancements and micro-interactions for better usability.</p></li>
+		<li><p class = "section-text">Conducted debugging, code reviews, and routine maintenance on existing systems.</p></li>
+		<li><p class = "section-text">Assisted in improving security practices related to front-end input handling.</p></li>
+		<li><p class = "section-text">Worked closely with product teams to deliver user-focused features on time.</p></li>
+	    </ul></p>
+        </section><br><br>
+   
+
+
+
+
+	<section id="reference">
+            <div class="title">References</div><br>
+    		<p class="section-text">
+
+	    <img src="images/james.png" alt="Gambar James" style = "width:12%">
+        	<p class="section-text"><b>Mr. James Chau</b> — IT Officer, KLK Ipoh<br><i>Phone:</i><a href="tel:+60124589923"> +6012-458 9923</a><br><i>Email:</i><a href="mailto: jchau@example.com"> jchau@example.com</a> </p>
+
+	    <img src="images/jordan.png" alt="Gambar Jordan" style = "width:10%">
+		<p class="section-text"><b>Mr. Jordan Belfort</b> — Senior Front-End Lead, Bank Islam HQ<br><i>Phone:</i><a href="tel:+60176672104"> +6017-667 2104</a><br><i>Email:</i><a href="mailto: jbelfort@example.com"> jbelfort@example.com</a> </p>    	
+
+	    <img src="images/hasan.png" alt="Gambar Hasan" style = "width:10%">
+		<p class="section-text"><b>Dr. Hassan Mutallib</b> — Lecturer, UiTM Puncak Perdana<br><i>Phone:</i><a href="tel:+60195528401"> +6019-552 8401</a><br><i>Email:</i><a href="mailto: hmutallib@example.com"> hmutallib@example.com</a> </p> 
+
+</section><br><br>
+</div>
+</div>
+
+
+
+<script>
+  const ripple = document.createElement('div');
+  ripple.classList.add('ripple');
+  document.body.appendChild(ripple);
+
+  let timeout;
+  document.addEventListener('mousemove', (e) => {
+    ripple.style.left = e.clientX + 'px';
+    ripple.style.top = e.clientY + 'px';
+
+    ripple.style.opacity = 1;
+    ripple.style.transform = 'translate(-50%, -50%) scale(1.15)';
+
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      ripple.style.opacity = 0;
+      ripple.style.transform = 'translate(-50%, -50%) scale(0.7)';
+    }, 120);
+  });
+</script>
+<script>
+  const ripple = document.createElement('div');
+  ripple.classList.add('ripple');
+  document.body.appendChild(ripple);
+
+  let timeout;
+  document.addEventListener('mousemove', (e) => {
+    // Use clientX/clientY so scrolling doesn't break alignment
+    ripple.style.left = e.clientX + 'px';
+    ripple.style.top = e.clientY + 'px';
+
+    ripple.style.opacity = 1;
+    ripple.style.transform = 'translate(-50%, -50%) scale(1)';
+
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      ripple.style.opacity = 0;
+      ripple.style.transform = 'translate(-50%, -50%) scale(0.7)';
+    }, 150);
+  });
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // small timeout to ensure computed styles are ready - requestAnimationFrame is also OK
+    window.requestAnimationFrame(function () {
+        var logo = document.querySelector('.logo');
+        if (logo) logo.classList.add('animate');
+    });
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const sections = document.querySelectorAll("section");
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                } else {
+                    entry.target.classList.remove("visible");
+                }
+            });
+        },
+        {
+            threshold: 0.35   // Adjust smoothness (0.2 = earlier fade, 0.5 = more centered)
+        }
+    );
+
+    sections.forEach(sec => observer.observe(sec));
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const sections = document.querySelectorAll("section");
+
+    const observer = new IntersectionObserver(
+        entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Show clicked section
+                    entry.target.classList.add("active");
+                } else {
+                    // Hide all others
+                    entry.target.classList.remove("active");
+                }
+            });
+        },
+        {
+            threshold: 0.55 // section must be ~55% in view to count
+        }
+    );
+
+    sections.forEach(sec => observer.observe(sec));
+
+    // Fix clicking sidebar links to ensure proper fading
+    document.querySelectorAll(".nav a").forEach(link => {
+        link.addEventListener("click", e => {
+            const targetID = link.getAttribute("href");
+
+            // Remove all active first
+            sections.forEach(s => s.classList.remove("active"));
+
+            // Add after slight delay to allow scroll jump
+            setTimeout(() => {
+                const targetSection = document.querySelector(targetID);
+                if (targetSection) targetSection.classList.add("active");
+            }, 20);
+        });
+    });
+});
+</script>
+<script>
+(function(){
+  if (!window.matchMedia) return;
+  if (!window.matchMedia('(max-width: 768px)').matches) return;
+
+  // Wait a tick so earlier observers finish
+  requestAnimationFrame(() => {
+    try {
+      const target = document.getElementById('experiences');
+      if (!target) return;
+
+      // Add a fail-safe: if the section is in the viewport now, activate it
+      const rect = target.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        target.classList.add('active');
+      }
+
+      // Create a lightweight observer with a low threshold for mobile
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('active');
+          } else {
+            e.target.classList.remove('active');
+          }
+        });
+      }, { threshold: 0.18 });
+
+      observer.observe(target);
+
+      // Also ensure clicking the nav link triggers activation (defensive)
+      const navLink = document.querySelector('.nav a[href="#experiences"]');
+      if (navLink) {
+        navLink.addEventListener('click', () => {
+          setTimeout(()=> target.classList.add('active'), 30);
+        });
+      }
+    } catch (err) {
+      // silently fail — non-destructive
+      console.warn('Experiences mobile helper failed', err);
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
