@@ -554,9 +554,27 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 </script>
+<script>
+// Force HOME to be active on first load or reload
+document.addEventListener("DOMContentLoaded", () => {
+    const homeSection = document.querySelector("#home");
+
+    // Remove hash fragment on load (so #experiences is ignored)
+    if (window.location.hash !== "" && window.location.hash !== "#home") {
+        history.replaceState(null, "", window.location.pathname);
+    }
+
+    // Ensure HOME becomes active immediately
+    setTimeout(() => {
+        document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
+        homeSection.classList.add("active");
+    }, 50); // slight delay ensures IntersectionObserver won't override
+});
+</script>
 
 </body>
 </html>
+
 
 
 
