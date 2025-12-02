@@ -253,10 +253,6 @@
     	table {
         	font-size: 14px;
     	}
-	 #experiences {
-    		min-height: 60vh; /* ensures it occupies space so observers work reliably */
-    		padding-bottom: 30px;
-  	}
 	}
 	
 
@@ -558,52 +554,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 </script>
-<script>
-(function(){
-  if (!window.matchMedia) return;
-  if (!window.matchMedia('(max-width: 768px)').matches) return;
-
-  // Wait a tick so earlier observers finish
-  requestAnimationFrame(() => {
-    try {
-      const target = document.getElementById('experiences');
-      if (!target) return;
-
-      // Add a fail-safe: if the section is in the viewport now, activate it
-      const rect = target.getBoundingClientRect();
-      if (rect.top < window.innerHeight && rect.bottom > 0) {
-        target.classList.add('active');
-      }
-
-      // Create a lightweight observer with a low threshold for mobile
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            e.target.classList.add('active');
-          } else {
-            e.target.classList.remove('active');
-          }
-        });
-      }, { threshold: 0.18 });
-
-      observer.observe(target);
-
-      // Also ensure clicking the nav link triggers activation (defensive)
-      const navLink = document.querySelector('.nav a[href="#experiences"]');
-      if (navLink) {
-        navLink.addEventListener('click', () => {
-          setTimeout(()=> target.classList.add('active'), 30);
-        });
-      }
-    } catch (err) {
-      // silently fail — non-destructive
-      console.warn('Experiences mobile helper failed', err);
-    }
-  });
-})();
-</script>
 
 </body>
 </html>
+
 
 
